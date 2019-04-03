@@ -1,50 +1,48 @@
-# Minfront
+# @mizchi/ssr-helpers
 
-My minimum frontend boilerplate 201811
+Implement `react-cache` SSR helpers.
 
-- yarn
-- parcel
-- typescript
-- jest
-- netlify
+## Requirements
 
-This code does **not** include framework, lint, ci, and other (production) tools.
+- react: ^16.7
+- react-dom: ^16.7
+- regenerator-runtime(included babel-polyfill)
 
-## Bootstrap
+## Data fetcher
 
-```bash
-# ... Setup node and yarn
-$ git clone git@github.com:mizchi-sandbox/minfront.git --depth 1 myspa
-$ cd myspa
-$ git remote rm origin # optional
-$ yarn install
-$ yarn dev    # Start app server
-$ yarn build  # Build to dist
-$ yarn test   # Run jest
-$ yarn deploy # Deploy to netlify
+```tsx
+import { renderAsync, createResource } from "@mizchi/ssr-helpers";
+
+// data fetcher
+const resource = createResource(async () => {
+  await new Promise(r => setTimeout(r, 1000));
+  return { message: "hello" };
+});
+
+function App() {
+  const data = resource.read();
+  return <div>{data.message}</div>;
+}
+
+const html = await renderAsync({
+  tree: <App />
+});
 ```
 
-## Optional: Rocommended tools
+Client rendering
 
-- https://github.com/prettier/prettier
-- https://github.com/paulirish/pwmetrics
-- https://github.com/xavdid/typed-install
-- https://github.com/saadq/lynt (at first linting)
+```tsx
+import React from "react";
+import ReactDOM from "react-dom";
 
-## Advanced: Build your own project like minfront
-
-This project is based on my handy shell command.
-
+const root = document.querySelector(".root") as HTMLDivElement;
+ReactDOM.hydrate(
+  <Suspense fallback="loading">
+    <App />
+  </Suspense>,
+  root
+);
 ```
-$ mkdir app_name; cd app_name
-$ yarn init -y; git init; gibo dump Node > .gitignore; yarn add typescript -D; yarn tsc --init
-```
-
-Optional: Replace `{app_name}` to `your-app-name` and remove README so far.
-
----
-
-# {app_name}
 
 ## How to dev
 

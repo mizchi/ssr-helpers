@@ -1,34 +1,23 @@
 {
-  "private": true,
+  "name": "@mizchi/ssr-helpers",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel src/index.html --open",
-    "build": "parcel build src/index.html",
-    "test": "jest",
-    "deploy": "netlify deploy -d dist --prod"
+    "build": "tsc -p ."
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
-    "@types/react-router": "^4.4.5",
-    "@types/react-router-config": "^1.1.2",
-    "@types/react-router-dom": "^4.3.1",
-    "@types/react-test-renderer": "^16.8.1",
-    "jest": "^24.5.0",
-    "netlify-cli": "^2.9.1",
-    "parcel-bundler": "^1.12.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "ts-jest": "^24.0.1",
     "ts-node": "^8.0.3",
     "typescript": "^3.4.1"
   },
-  "dependencies": {
-    "@babel/polyfill": "^7.4.3",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router": "^5.0.0",
-    "react-router-config": "^5.0.0",
-    "react-router-dom": "^5.0.0",
-    "react-test-renderer": "^16.8.6"
-  }
+  "files": ["index.js", "index.d.ts"]
 }

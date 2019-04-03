@@ -1,5 +1,7 @@
 // Extract from https://github.com/trojanowski/react-apollo-hooks
 import React from "react";
+import ReactDOMServer from 'react-dom/server';
+
 const SSRContext = React.createContext<null | SSRManager>(null);
 
 interface SSRManager {
@@ -27,13 +29,11 @@ function createSSRManager(): SSRManager {
 interface GetMarkupFromTreeOptions {
   tree: React.ReactNode;
   onBeforeRender?: () => any;
-  renderFunction: (tree: React.ReactElement<object>) => string;
 }
 
 export function renderAsync({
   tree,
-  onBeforeRender,
-  renderFunction
+  onBeforeRender
 }: GetMarkupFromTreeOptions): Promise<string> {
   const ssrManager = createSSRManager();
 
@@ -42,7 +42,7 @@ export function renderAsync({
       if (onBeforeRender) {
         onBeforeRender();
       }
-      const html = renderFunction(
+      const html = ReactDOMServer.renderToString(
         <SSRContext.Provider value={ssrManager}>{tree}</SSRContext.Provider>
       );
 
